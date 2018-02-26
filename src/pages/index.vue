@@ -1,6 +1,6 @@
 <template>
     <div class="index-wrap">
-
+        <p>更改一下试试git</p>
         <div class="index-left">
             <div class="index-left-block">
                 <h2>全部产品</h2>
