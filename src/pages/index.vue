@@ -1,6 +1,5 @@
 <template>
     <div class="index-wrap">
-        <p>更改一下试试git</p>
         <div class="index-left">
             <div class="index-left-block">
                 <h2>全部产品</h2>
@@ -26,7 +25,7 @@
         </div>
 
         <div class="index-right">
-            <slide-show :slides="slides"></slide-show>
+            <slide-show :slides="slides" :inv="invTime"></slide-show>
             <div class="index-board-list">
                 <div class="index-board-item" v-for="(item, index) in boardList" :class="[{'line-last' : index % 2 !== 0}, 'index-board-' + item.id]">
                     <div class="index-board-item-inner">
@@ -59,6 +58,7 @@ export default {
     },
     data() {
         return {
+            invTime: 3000,
             slides: [
                 {
                     src: require('../assets/slideShow/pic1.jpg'),

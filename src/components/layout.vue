@@ -5,11 +5,13 @@
                 <img src="../assets/logo.png">
                 <div class="head-nav">
                     <ul class="nav-list">
-                        <li>登陆</li>
+                        <li>{{username}}</li>
+                        <li v-if="username===''" @click="loginClick">登陆</li>
                         <li class="nav-pile"> | </li>
-                        <li>注册</li>
+                        <li v-if="username!==''" @click="quit">退出</li>
+                        <li v-if="username===''" @click="regClick">注册</li>
                         <li class="nav-pile"> | </li>
-                        <li>关于</li>
+                        <li @click="aboutClick">关于</li>
                         <li class="nav-pile"> | </li>
                     </ul>
                 </div>
@@ -23,12 +25,56 @@
         <div class="app-foot">
             <p>@2018 抄袭By Tad</p>
         </div>
+        <my-dialog :is-show="isShowLoginDialog" @on-close="closeDialog('isShowLoginDialog')">
+            <login-form @has-log="onSuccessLogin"></login-form>
+        </my-dialog>
+        <my-dialog :is-show="isShowRegDialog" @on-close="closeDialog('isShowRegDialog')">
+            <reg-form></reg-form>
+        </my-dialog>
+        <my-dialog :is-show="isShowAboutDialog" @on-close="closeDialog('isShowAboutDialog')">
+            <p>本报告在调研数据的基础上，采用定性与定量相结合的方式深入分析了专车市场发展的驱动因素与阻碍因素、专车市场背后的产业格局、专车企业的竞争格局、用户对专车市场的依赖程度、专车对其他交通工具运力的补充效应等，通过这五个章节的研究反映专车市场的发展态势和面临的问题。报告力求客观、深入、准确地反映中国专车市场发展情况，为政府、企事业单位和社会各界提供决策依据</p>
+        </my-dialog>
     </div>
 </template>
 
 <script>
-export default {
+import Dialog from './base/dialog'
+import LoginForm from './loginForm'
+import RegForm from './regForm'
 
+export default {
+    components: {
+        MyDialog: Dialog,
+        LoginForm,
+        RegForm
+    },
+    data() {
+        return {
+            isShowAboutDialog: false,
+            isShowLoginDialog: false,
+            isShowRegDialog: false,
+            username: ''
+        }
+    },
+    methods: {
+        aboutClick() {
+            this.isShowAboutDialog = true
+        },
+        loginClick() {
+            this.isShowLoginDialog = true
+        },
+        regClick() {
+            this.isShowRegDialog = true
+        },
+        closeDialog(attr) {
+            this[attr] = false
+        },
+        onSuccessLogin(data) {
+            console.log(data.data.username)
+            this.closeDialog('isShowLoginDialog')
+            this.username = data.data.username
+        }
+    }
 }
 </script>
 
@@ -121,6 +167,17 @@ video {
     font: inherit;
     vertical-align: baseline;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

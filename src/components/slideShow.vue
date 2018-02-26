@@ -1,8 +1,13 @@
 <template>
-    <div class="slide-show">
+    <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
         <div class="slide-img">
             <a href="slides[nowIndex].href">
-                <img :src="slides[nowIndex].src">
+                <transition name="slide-trans">
+                    <img v-if="isShow" :src="slides[nowIndex].src">
+                </transition>
+                <transition name="slide-trans-old">
+                    <img v-if="!isShow" :src="slides[nowIndex].src">
+                </transition>
             </a>
         </div>
         <h2>{{slides[nowIndex].title}}</h2>
@@ -58,7 +63,7 @@ export default {
             setTimeout(() => {
                 this.isShow = true
                 this.nowIndex = index
-            }, 1000)
+            }, 10)
         },
         runInv() {
             this.invId = setInterval(() => {
