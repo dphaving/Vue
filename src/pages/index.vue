@@ -38,20 +38,22 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
 import slideShow from '../components/slideShow'
+import axios from 'axios'
 export default {
     created: function() {
-        this.$http.get('api/getnewsList')
-            .then((res) => {
-                this.newsList = res.data.data
-            }, (err) => {
-                console.log(err)
+        axios.get('api/getNewsList')
+            .then((response) => {
+                console.log(response);
+                this.newsList = response.data
             })
+            .catch((response) => {
+                console.log(response);
+            });
     },
     components: {
         slideShow
@@ -73,7 +75,7 @@ export default {
                 {
                     src: require('../assets/slideShow/pic3.jpg'),
                     title: '算法',
-                    href: 'http://xxx.xxx.com'
+                    href: 'detail/publish'
                 },
                 {
                     src: require('../assets/slideShow/pic4.jpg'),
@@ -88,20 +90,20 @@ export default {
                     list: [
                         {
                             name: '数据统计',
-                            url: 'http://starcraft.com'
+                            url: 'detail/count'
                         },
                         {
                             name: '数据预测',
-                            url: 'http://warcraft.com'
+                            url: 'detail/forecast'
                         },
                         {
                             name: '流量分析',
-                            url: 'http://overwatch.com',
+                            url: 'detail/analysis',
                             hot: true
                         },
                         {
                             name: '广告发布',
-                            url: 'http://hearstone.com'
+                            url: 'detail/publish'
                         }
                     ]
                 },

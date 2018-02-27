@@ -9,17 +9,17 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-const express = require('express')
-const app = express()
-var appData = require('../db.json')
-var getNewsList = appData.getNewsList
-var login = appData.login
-var getPrice = appData.getPrice
-var createOrder = appData.createOrder
-var getOrderList = appData.getOrderList
-var ratings = appData.ratings
-var apiRoutes = express.Router()
-app.use('/api', apiRoutes)
+    // const express = require('express')
+    // const app = express()
+    // var appData = require('../db.json')
+    // var getNewsList = appData.getNewsList
+    // var login = appData.login
+    // var getPrice = appData.getPrice
+    // var createOrder = appData.createOrder
+    // var getOrderList = appData.getOrderList
+    // var ratings = appData.ratings
+    // var apiRoutes = express.Router()
+    // app.use('/api', apiRoutes)
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -51,44 +51,45 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         quiet: true, // necessary for FriendlyErrorsPlugin
         watchOptions: {
             poll: config.dev.poll,
-        },
-        before(app) {
-            app.get('/api/getNewsList', (req, res) => {
-                    res.json({
-                        // 这里是你的json内容
-                        errno: 7,
-                        data: getNewsList
-                    })
-                }),
-                app.get('/api/login', (req, res) => {
-                    res.json({
-                        // 这里是你的json内容
-                        errno: 0,
-                        data: login
-                    })
-                }),
-                app.get('/api/getPrice', (req, res) => {
-                    res.json({
-                        // 这里是你的json内容
-                        errno: 0,
-                        data: getPrice
-                    })
-                }),
-                app.get('/api/createOrder', (req, res) => {
-                    res.json({
-                        // 这里是你的json内容
-                        errno: 0,
-                        data: createOrder
-                    })
-                }),
-                app.get('/api/getOrderList', (req, res) => {
-                    res.json({
-                        // 这里是你的json内容
-                        errno: 0,
-                        data: getOrderList
-                    })
-                })
         }
+        // ,
+        // before(app) {
+        //     app.get('/api/getNewsList', (req, res) => {
+        //             res.json({
+        //                 // 这里是你的json内容
+        //                 errno: 7,
+        //                 data: getNewsList
+        //             })
+        //         }),
+        //         app.get('/api/login', (req, res) => {
+        //             res.json({
+        //                 // 这里是你的json内容
+        //                 errno: 0,
+        //                 data: login
+        //             })
+        //         }),
+        //         app.post('/api/getPrice', (req, res) => {
+        //             res.json({
+        //                 // 这里是你的json内容
+        //                 errno: 0,
+        //                 data: getPrice
+        //             })
+        //         }),
+        //         app.get('/api/createOrder', (req, res) => {
+        //             res.json({
+        //                 // 这里是你的json内容
+        //                 errno: 0,
+        //                 data: createOrder
+        //             })
+        //         }),
+        //         app.get('/api/getOrderList', (req, res) => {
+        //             res.json({
+        //                 // 这里是你的json内容
+        //                 errno: 0,
+        //                 data: getOrderList
+        //             })
+        //         })
+        // }
     },
     plugins: [
         new webpack.DefinePlugin({

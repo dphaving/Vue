@@ -2,7 +2,9 @@
     <div>
         <div class="app-head">
             <div class="app-head-inner">
-                <img src="../assets/logo.png">
+                <router-link :to="{path:'/'}">
+                    <img src="../assets/logo.png">
+                </router-link>
                 <div class="head-nav">
                     <ul class="nav-list">
                         <li>{{username}}</li>
@@ -70,9 +72,9 @@ export default {
             this[attr] = false
         },
         onSuccessLogin(data) {
-            console.log(data.data.username)
+            console.log(data.username)
             this.closeDialog('isShowLoginDialog')
-            this.username = data.data.username
+            this.username = data.username
         }
     }
 }
@@ -167,6 +169,8 @@ video {
     font: inherit;
     vertical-align: baseline;
 }
+
+
 
 
 

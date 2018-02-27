@@ -25,6 +25,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -79,11 +80,13 @@ export default {
             else {
                 console.log("进入登陆接口");
                 this.errorText = ''
-                this.$http.get('api/login')
-                    .then((res) => {
-                        this.$emit('has-log', res.data)
-                    }, (err) => {
-                        console.log(err)
+                axios.get('api/login')
+                    .then((response) => {
+                        console.log(response);
+                        this.$emit('has-log', response.data)
+                    })
+                    .catch((response) => {
+                        console.log(response);
                     })
             }
         }
