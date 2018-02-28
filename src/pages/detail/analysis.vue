@@ -97,8 +97,16 @@
                     <td>{{price}}</td>
                 </tr>
             </table>
+            <h3 class="buy-dialog-totle">请选择银行</h3>
+            <bank-chooser @on-change="onChangeBanks"></bank-chooser>
+            <div class="button buy-dialog-btn" @click="confirmBuy">
+                确认购买
+            </div>
         </my-dialog>
-
+        <my-dialog :is-show="isShowErrDialog" @on-close="hideErrDialog">
+            支付失败！
+        </my-dialog>
+        <check-order :is-show-check-dialog="isShowCheckOrder" :order-id="orderId" @on-close-check-dialog="hideErrDialog"></check-order>
     </div>
 </template>
 <script>
@@ -107,6 +115,8 @@ import VSelection from '../../components/base/selection'
 import VChooser from '../../components/base/chooser'
 import VMulChooser from '../../components/base/multiplyChooser'
 import Dialog from '../../components/base/dialog'
+import BankChooser from '../../components/bankChooser'
+import CheckOrder from '../../components/checkOrder'
 import _ from 'lodash'
 import axios from 'axios'
 export default {
@@ -115,7 +125,9 @@ export default {
         VSelection,
         VChooser,
         VMulChooser,
-        MyDialog: Dialog
+        MyDialog: Dialog,
+        BankChooser,
+        CheckOrder
     },
     data() {
         return {
@@ -166,7 +178,11 @@ export default {
                     value: 2
                 }
             ],
-            isShowPayDialog: false
+            isShowPayDialog: false,
+            bankId: null,
+            orderId: null,
+            isShowCheckOrder: false,
+            isShowErrDialog: false
         }
     },
     methods: {
@@ -199,8 +215,50 @@ export default {
             this.isShowPayDialog = true
         },
         hidePayDialog() {
-            this.isShowPayDialog = false
+            this.isShowErrDialog = true
+        },
+        hideErrDialog() {
+            this.isShowErrDialog = false
+        },
+        onChangeBanks(bankObj) {
+            console.log(bankObj.id)
+            this.bankId = bankObj.id
+        },
+        hideErrDialog() {
+            this.isShowErrDialog = false
+        },
+        confirmBuy() {
+            let buyVersionArray = _.map(this.versions, (item) => {
+                return item.value
+            })
+            let reqParams = {
+                buyNumber: this.buyNum,
+                buyType: this.buyType.value,
+                period: this.period.value,
+                version: buyVersionArray.join(','),
+                bankId: this.bankId
+            }
+            axios.post('api/createOrder', reqParams)
+                .then((response) => {
+                    console.log(response.data)
+                    this.orderId = response.data.orderId
+                    console.log(response.data.orderId)
+                    this.isShowCheckOrder = true
+                    this.isShowPayDialog = false
+                })
+                .catch((err) => {
+                    this.isShowBuyDialog = false
+                    this.isShowErrDialog = true
+                    console.log(err)
+                })
         }
+    },
+    mounted() {
+        this.buyNum = 1
+        this.buyType = this.buyTypes[0]
+        this.period = this.periodList[0]
+        this.versions = [this.versionList[0]]
+        this.getPrice()
     }
 }
 </script>
