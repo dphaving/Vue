@@ -13,6 +13,7 @@ import Count from './pages/detail/count'
 import Forecast from './pages/detail/forecast'
 import Publish from './pages/detail/publish'
 import axios from 'axios'
+import store from './store/index'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -58,6 +59,7 @@ Vue.config.productionTip = false
 new Vue({
     el: '#app',
     router,
+    store,
     components: { Layout },
     template: '<Layout/>'
 })

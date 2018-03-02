@@ -70,7 +70,7 @@ export default {
                     value: 3
                 }
             ],
-            tableData: [],
+            //tableData: [],
             tableHeads: [
                 {
                     label: '订单号',
@@ -101,7 +101,13 @@ export default {
                     key: 'amount'
                 }
             ],
-            currentOrder: 'asc'
+            currentOrder: 'asc',
+            params: {
+                query: this.query,
+                productId: this.productId,
+                startDate: this.startDate,
+                endDate: this.endDate
+            }
         }
     },
     methods: {
@@ -146,6 +152,21 @@ export default {
                 this.currentOrder = 'asc'
             }
             this.tableData = _.orderBy(this.tableData, headItem.key, this.currentOrder)
+        }
+    },
+    watch: {
+        query() {
+            console.log("进入query")
+            this.getList()
+        }
+    },
+    mounted() {
+        this.$store.dispatch('fetchOrderList', this.params)
+        console.log(this.$store);
+    },
+    computed: {
+        tableData() {
+            return this.$store.getters.getOrderList
         }
     }
 }

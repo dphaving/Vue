@@ -12,7 +12,7 @@
                     产品类型：
                 </div>
                 <div class="sales-board-line-right">
-
+                    <v-chooser :selections="buyTypes"></v-chooser>
                 </div>
             </div>
             <div class="sales-board-line">
@@ -20,7 +20,7 @@
                     适用地区：
                 </div>
                 <div class="sales-board-line-right">
-
+                    <v-selection :selections="cities"></v-selection>
                 </div>
             </div>
             <div class="sales-board-line">
@@ -28,7 +28,7 @@
                     有效时间：
                 </div>
                 <div class="sales-board-line-right">
-                    半年
+                    <v-chooser :selections="periodList"></v-chooser>
                 </div>
             </div>
             <div class="sales-board-line">
@@ -242,10 +242,89 @@
                 </tbody>
             </table>
         </div>
+        <div class="sales-board-des">
+            <h2>产品说明</h2>
+            <p>网站访问统计分析报告的基础数据源于网站流量统计信息，但其价值远高于原始数据资料。专业的网站访问统计分析报告对网络营销的价值，正如专业的财务分析报告对企业经营策略的价值。</p>
+
+            <h3>用户行为指标</h3>
+            <ul>
+                <li>用户行为指标主要反映用户是如何来到网站的、在网站上停留了多长时间、访问了哪些页面等，主要的统计指标包括：</li>
+                <li>用户在网站的停留时间；</li>
+                <li>用户来源网站（也叫“引导网站”）；</li>
+                <li>用户所使用的搜索引擎及其关键词；</li>
+                <li>在不同时段的用户访问量情况等。</li>
+            </ul>
+
+            <h3>浏览网站方式</h3>
+            <ul>
+                <li>用户上网设备类型</li>
+                <li>用户浏览器的名称和版本</li>
+                <li>访问者电脑分辨率显示模式</li>
+                <li>用户所使用的操作系统名称和版本</li>
+                <li>用户所在地理区域分布状况等</li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
+import VChooser from '../../components/base/chooser'
+import VSelection from '../../components/base/selection'
 export default {
+    components: {
+        VChooser,
+        VSelection
+    },
+    data() {
+        return {
+            buyTypes: [
+                {
+                    label: '红色版',
+                    value: 0
+                },
+                {
+                    label: '绿色版',
+                    value: 1
+                },
+                {
+                    label: '紫色版',
+                    value: 2
+                }
+            ],
+            cities: [
+                {
+                    label: '北京',
+                    value: 0
+                },
+                {
+                    label: '上海',
+                    value: 1
+                },
+                {
+                    label: '广州',
+                    value: 2
+                },
+                {
+                    label: '深圳',
+                    value: 3
+                }
+            ],
+            periodList: [
+                {
+                    label: '半年',
+                    value: 0
+                },
+                {
+                    label: '一年',
+                    value: 1
+                },
+                {
+                    label: '三年',
+                    value: 2
+                }
+            ]
+
+        }
+    }
 
 }
 </script>

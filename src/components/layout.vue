@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="resetComponent">
         <div class="app-head">
             <div class="app-head-inner">
                 <router-link :to="{path:'/'}">
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { eventBus } from '../eventBus'
 import Dialog from './base/dialog'
 import LoginForm from './loginForm'
 import RegForm from './regForm'
@@ -75,6 +76,9 @@ export default {
             console.log(data.username)
             this.closeDialog('isShowLoginDialog')
             this.username = data.username
+        },
+        resetComponent() {
+            eventBus.$emit('reset-conponent')
         }
     }
 }
@@ -169,6 +173,8 @@ video {
     font: inherit;
     vertical-align: baseline;
 }
+
+
 
 
 

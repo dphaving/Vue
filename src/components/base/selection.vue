@@ -12,6 +12,7 @@
     </div>
 </template>
 <script>
+import { eventBus } from '../../eventBus'
 export default {
     props: {
         selections: {
@@ -31,7 +32,9 @@ export default {
         }
     },
     methods: {
-        toggleDrop() {
+        toggleDrop(event) {
+            event.stopPropagation()
+            eventBus.$emit('reset-conponent')
             this.isDrop = !this.isDrop
         },
         chooseSelection(index) {
@@ -39,6 +42,12 @@ export default {
             this.isDrop = false
             this.$emit('on-change', this.selections[this.nowIndex])
         }
+    },
+    //监听一个事件
+    mounted() {
+        eventBus.$on('reset-conponent', () => {
+            this.isDrop = false
+        })
     }
 }
 </script>
